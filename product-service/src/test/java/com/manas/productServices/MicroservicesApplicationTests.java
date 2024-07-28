@@ -13,7 +13,7 @@ import org.testcontainers.shaded.org.hamcrest.Matchers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MicroservicesApplicationTests {
 
-	@ServiceConnection // this will automatically inject mongodb connection uri from application.properties
+	@ServiceConnection // this will automatically inject mongodb connection uri from application.properties file
 	static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo");
 
 	@LocalServerPort
