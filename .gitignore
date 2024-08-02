@@ -41,4 +41,5 @@ build/
 inventory-service/mysql
 order-service/mysql
 product-service/data
-volume-data
+api-gateway/volume-data
+api-gateway/docker
