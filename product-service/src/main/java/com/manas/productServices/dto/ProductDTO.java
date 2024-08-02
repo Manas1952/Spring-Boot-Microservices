@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class ProductDTO {
-    private String id;
-    private String name;
-    private String description;
-    private BigDecimal price;
+//@Data
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
+//public class ProductDTO {
+//    private String id;
+//    private String name;
+//    private String description;
+//    private BigDecimal price;
+//}
+
+public record ProductDTO(String id, String name, String description, BigDecimal price) {
 }

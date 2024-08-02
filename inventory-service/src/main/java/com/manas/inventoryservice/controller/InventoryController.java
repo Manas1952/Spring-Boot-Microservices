@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @GetMapping("/inventory")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<InventoryDTO> placeOrder(@RequestParam List<String> skuCode) {
-        List<Inventory> inventoryList = inventoryService.isInStock(skuCode);
-        return InventoryMapper.MAPPER.DtoToModel(inventoryList);
+    public boolean placeOrder(@RequestParam String skuCode, @RequestParam Integer quantity) {
+        return inventoryService.isInStock(skuCode, quantity);
     }
 }

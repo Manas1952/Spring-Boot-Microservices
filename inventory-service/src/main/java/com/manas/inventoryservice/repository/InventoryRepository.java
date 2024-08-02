@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     public List<Inventory> findBySkuCodeIn(List<String> skuCode);
+
+    boolean existsBySkuCodeAndQuantityIsGreaterThanEqual(String skuCode, Integer quantity);
 }

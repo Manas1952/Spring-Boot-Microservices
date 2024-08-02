@@ -1,5 +1,6 @@
 package com.manas.orderservice.service;
 
+import com.manas.orderservice.client.InventoryClient;
 import com.manas.orderservice.dto.InventoryDTO;
 import com.manas.orderservice.dto.OrderDTO;
 import com.manas.orderservice.mapper.OrderMapper;
@@ -21,28 +22,35 @@ import java.util.UUID;
 @Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final WebClient.Builder webClientBuilder;
+    private final InventoryClient inventoryClient;
+//    private final WebClient.Builder webClientBuilder;
 
     public void placeOrder(OrderDTO orderDTO) {
-        Order order = OrderMapper.MAPPER.DtoToModel(orderDTO);
-        order.setOrderNumber(UUID.randomUUID().toString());
+        boolean isInStock = inventoryClient.isInStock(orderDTO.skuCode(), orderDTO.quantity());
 
-        List<String> skuCodes = order.getOrderLineItems().stream().map(OrderLineItems::getSkuCode).toList();
-        try {
-            List<InventoryDTO> inventoryDTOS = webClientBuilder.build().get()
-                    .uri("http://inventory-service/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                    .retrieve()
-                    .bodyToMono(new ParameterizedTypeReference<List<InventoryDTO>>() {})
-                    .block();
-
-            boolean isInStock = inventoryDTOS.stream().allMatch(InventoryDTO::isInStock);
-            if (isInStock) {
-                orderRepository.save(order);
-            } else {
-                throw new IllegalAccessException("Product is not in stock, please try again later!");
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+        if (isInStock) {
+            Order order = OrderMapper.MAPPER.DtoToModel(orderDTO);
+            order.setOrderNumber(UUID.randomUUID().toString());
+            orderRepository.save(order);
+        } else {
+            throw new RuntimeException("Product with SkuCode " + orderDTO.skuCode() + " is not in stock, please try again later!");
         }
+
+//        List<String> skuCodes = order.getOrderLineItems().stream().map(OrderLineItems::getSkuCode).toList();
+//        try {
+//            List<InventoryDTO> inventoryDTOS = webClientBuilder.build().get()
+//                    .uri("http://inventory-service/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+//                    .retrieve()
+//                    .bodyToMono(new ParameterizedTypeReference<List<InventoryDTO>>() {})
+//                    .block();
+//
+//            boolean isInStock = inventoryDTOS.stream().allMatch(InventoryDTO::isInStock);
+//            if (isInStock) {
+//            } else {
+//                throw new IllegalAccessException("Product is not in stock, please try again later!");
+//            }
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

@@ -16,7 +16,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String orderNumber;
+    private String skuCode;
+    private String price;
+    private String quantity;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderLineItems> orderLineItems;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<OrderLineItems> orderLineItems;
 }

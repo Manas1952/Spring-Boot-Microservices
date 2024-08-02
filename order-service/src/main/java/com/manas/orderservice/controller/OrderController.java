@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/orders")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String placeOrder(@RequestBody OrderDTO orderDTO) {
         orderService.placeOrder(orderDTO);

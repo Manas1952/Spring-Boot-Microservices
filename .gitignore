@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Docker volumes ###
+inventory-service/mysql
+order-service/mysql
+product-service/data
+volume-data

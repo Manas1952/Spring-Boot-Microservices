@@ -3,23 +3,19 @@ package config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebFluxSecurity
 public class SecurityConfig {
+
+    private final String[] freeResourceUrls = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/api-docs", "/aggregate/**"};
+
     @Bean
-    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-        serverHttpSecurity.csrf(csrf -> csrf.disable())
-                .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/eureka/**")
-                        .permitAll()
-                        .anyExchange()
-                        .authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(Customizer.withDefaults()));
-        return serverHttpSecurity.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers(freeResourceUrls).permitAll().anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .build();
     }
 }

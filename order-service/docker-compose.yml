@@ -1,0 +1,13 @@
+version: '4'
+services:
+  mysql:
+#    image: mysql:8.4.2
+    image: mysql:8.0.35
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql # So when the container would be running, init.sql will get execute because it is added inside folder 'docker-entrypoint-initdb.d' (which is command) and docker container will understand to execute this file
