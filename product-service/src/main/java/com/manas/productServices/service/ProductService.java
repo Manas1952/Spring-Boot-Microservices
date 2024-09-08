@@ -17,11 +17,6 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public ProductDTO createProduct(ProductDTO productDTO) {
-//        Product product = Product.builder()
-//                .name(productDTO.getName())
-//                .description(productDTO.getDescription())
-//                .price(productDTO.getPrice())
-//                .build();
         Product product = ProductMapper.MAPPER.DtoToModel(productDTO);
         product = productRepository.save(product);
         log.info("Product {} is saved", product.getId());

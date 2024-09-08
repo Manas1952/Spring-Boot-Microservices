@@ -42,4 +42,4 @@ inventory-service/mysql
 order-service/mysql
 product-service/data
 api-gateway/volume-data
-api-gateway/docker
+api-gateway/docker/tempo/tempo-data

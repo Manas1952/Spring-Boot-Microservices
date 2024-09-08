@@ -12,7 +12,6 @@ public interface ProductMapper {
     ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
     List<ProductDTO> modelsToDtos(List<Product> products);
-//    ProductDTO modelToDto(Product product);
     Product DtoToModel(ProductDTO productDTO);
     ProductDTO modelToDto(Product product);
 }

@@ -1,8 +1,5 @@
 package com.manas.inventoryservice.controller;
 
-import com.manas.inventoryservice.dto.InventoryDTO;
-import com.manas.inventoryservice.mapper.InventoryMapper;
-import com.manas.inventoryservice.model.Inventory;
 import com.manas.inventoryservice.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -36,9 +36,14 @@ class OrderServiceApplicationTests {
 	void shouldSubmitOrder() {
 		String submitOrderJson = """
 				{
-				     "skuCode": "iphone_15",
-				     "price": 1000,
-				     "quantity": 100
+					 "skuCode": "iphone_15",
+					 "price": 1000,
+					 "quantity": 100,
+					 "userDetails": {
+						"email": "purohitmanas36@gmail.com",
+						"firstName": "Manas",
+						"lastName": "Purohit"
+					 }
 				}
 				""";
 
