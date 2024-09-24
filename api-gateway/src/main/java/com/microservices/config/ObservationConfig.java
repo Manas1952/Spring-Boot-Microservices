@@ -1,4 +1,4 @@
-package config;
+package com.microservices.config;
 
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.aop.ObservedAspect;

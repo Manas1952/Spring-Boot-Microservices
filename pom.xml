@@ -19,7 +19,6 @@
         <module>product-service</module>
         <module>inventory-service</module>
         <module>order-service</module>
-        <module>discovery-server</module>
         <module>api-gateway</module>
 <!--        <module>notification-service/notification-service</module>-->
 <!--        <module>../notification-service/notification-service</module>-->
@@ -31,6 +30,7 @@
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <dockerPassword></dockerPassword>
     </properties>
 
     <dependencyManagement>
@@ -84,6 +84,25 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>veangeance00/${project.artifactId}</name>
+                        <publish>true</publish>
+                        <env>
+                            <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+                        </env>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <username>veangeance00</username>
+                            <password>${dockerPassword}</password>
+                        </publishRegistry>
+                    </docker>
                 </configuration>
             </plugin>
         </plugins>
